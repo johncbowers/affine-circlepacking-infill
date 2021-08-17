@@ -302,7 +302,7 @@ def main():
         for v in new_mesh_2D.verts:
             if v.is_interior:
                 old_vdata = v.data
-#                v.data += update_delta * pos_update[v.idx]
+                v.data += update_delta * pos_update[v.idx]
 
                 # Check each face's orientation, if one changed, then we have a problem
                 face_orientations_are_valid = True
@@ -332,7 +332,7 @@ def main():
 
         
 
-    def spring_2D_update_multi_factory(k = 1):
+    def spring_2D_update_multi_factory(k = 100):
         def repeater():
             nonlocal k
             for _ in range(k):
