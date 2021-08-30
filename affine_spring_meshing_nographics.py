@@ -64,8 +64,8 @@ def main():
     max_stress = max(stresses)
     min_stress = min(stresses)
 
-    min_radius = 0.01#0.0075 #0.01
-    max_radius = 0.04#0.03 #0.03
+    min_radius = 0.0005#0.0075 #0.01
+    max_radius = 0.002#0.03 #0.03
 
     norm_stresses = [(s - min_stress) / (max_stress - min_stress) for s in stresses]
     desired_radii = [min_radius + (1 - s) * (max_radius - min_radius) for s in norm_stresses]
@@ -188,7 +188,7 @@ def main():
     
 
     show_points(lifted_points)
-    show_mesh_and_samples(new_mesh, accepted_samples + [(None, r, None, None, None, None, None) for r in boundary_radii])
+    #show_mesh_and_samples(new_mesh, accepted_samples + [(None, r, None, None, None, None, None) for r in boundary_radii])
     show_mesh(new_mesh_2D)
 
     print("Running affine simulation...")
@@ -428,8 +428,16 @@ def main():
     
     #(spring_2D_update_multi_factory(k=100))()
     
-    plotter = AnimatedPlotter(spring_2D_update_multi_factory(k=1), spring_draw)
-    plotter.show()
+    # plotter = AnimatedPlotter(spring_2D_update_multi_factory(k=1), spring_draw)
+    # plotter.show()
+
+    print("Running 20 iterations of the affine spring simulation...")
+    affine_fn = spring_2D_update_multi_factory(k=1)
+    for i in range(20):
+        affine_fn()
+        print(i)
+    
+    print("Showing dual mesh...")
 
     plotter = Plotter(size=(1600, 1600))
     plotter.show(
